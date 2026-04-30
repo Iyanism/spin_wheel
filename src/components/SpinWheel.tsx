@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useCallback } from "react";
 import confetti from "canvas-confetti";
 import { Diamond } from "lucide-react";
+import Image from "next/image";
 
 const REWARDS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000];
-const WEIGHTS = [125, 125, 125, 125, 125, 125, 50, 50, 50, 50, 40, 10];
+const WEIGHTS = [125, 125, 125, 125, 120, 110, 40, 40, 40, 40, 30, 10];
 
 const COLORS = [
   "hsl(262, 83%, 58%)",
@@ -18,12 +19,36 @@ const COLORS = [
   "hsl(291, 84%, 61%)",
 ];
 
+const triggerConfetti = () => {
+  const duration = 3 * 1000;
+  const animationEnd = Date.now() + duration;
+  const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
+
+  const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
+
+  const interval: NodeJS.Timeout = setInterval(function () {
+    const timeLeft = animationEnd - Date.now();
+    if (timeLeft <= 0) {
+      return clearInterval(interval);
+    }
+    const particleCount = 50 * (timeLeft / duration);
+    confetti({
+      ...defaults, particleCount,
+      origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+    });
+    confetti({
+      ...defaults, particleCount,
+      origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+    });
+  }, 250);
+};
+
 export default function SpinWheel() {
   const [isSpinning, setIsSpinning] = useState(false);
   const [reward, setReward] = useState<number | null>(null);
   const [rotation, setRotation] = useState(0);
 
-  const spin = () => {
+  const spin = useCallback(() => {
     if (isSpinning) return;
     setIsSpinning(true);
     setReward(null);
@@ -68,31 +93,7 @@ export default function SpinWheel() {
       setReward(REWARDS[winnerIndex]);
       triggerConfetti();
     }, 5000);
-  };
-
-  const triggerConfetti = () => {
-    const duration = 3 * 1000;
-    const animationEnd = Date.now() + duration;
-    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
-
-    const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
-
-    const interval: any = setInterval(function () {
-      const timeLeft = animationEnd - Date.now();
-      if (timeLeft <= 0) {
-        return clearInterval(interval);
-      }
-      const particleCount = 50 * (timeLeft / duration);
-      confetti({
-        ...defaults, particleCount,
-        origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
-      });
-      confetti({
-        ...defaults, particleCount,
-        origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
-      });
-    }, 250);
-  };
+  }, [isSpinning, rotation]);
 
   const createWheelSlices = () => {
     const segmentAngle = 360 / REWARDS.length;
@@ -158,7 +159,7 @@ export default function SpinWheel() {
       {/* Decorative Header */}
       <div className="text-center mb-12 space-y-4 z-10">
         <h1 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 drop-shadow-sm">
-          Lucky Spin Wheel
+          Community Hero Reward Wheel
         </h1>
         <p className="text-lg text-slate-500 font-medium max-w-md mx-auto">
           Test your luck to win exclusive diamond packs. Spin the wheel to claim your reward!
@@ -188,8 +189,8 @@ export default function SpinWheel() {
             </div>
 
             {/* Stationary Center Hub */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 md:w-20 md:h-20 bg-white rounded-full shadow-[0_0_15px_rgba(0,0,0,0.2)] border-2 border-slate-100 flex items-center justify-center z-20">
-              <Diamond className="text-blue-500 w-6 h-6 md:w-8 md:h-8" />
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 md:w-30 md:h-30 bg-white rounded-full shadow-[0_0_15px_rgba(0,0,0,0.2)] border-2 border-slate-100 flex items-center justify-center z-20">
+              <Image src={"/comunitty_hero.jpeg"} alt="Community Hero" width={500} height={500} className="rounded-full"></Image>
             </div>
 
           </div>
