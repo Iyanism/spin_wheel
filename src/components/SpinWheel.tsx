@@ -154,14 +154,19 @@ export default function SpinWheel() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white text-slate-900 font-sans p-6">
+    <div 
+      className="flex flex-col items-center justify-center min-h-screen font-sans p-6 relative overflow-hidden"
+      style={{
+        background: 'radial-gradient(circle at 50% 50%, #ffea00 0%, #ff8c00 55%, #e65100 100%)'
+      }}
+    >
 
       {/* Decorative Header */}
       <div className="text-center mb-12 space-y-4 z-10">
-        <h1 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 drop-shadow-sm">
+        <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)]" style={{ textShadow: '2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }}>
           Community Hero Reward Wheel
         </h1>
-        <p className="text-lg text-slate-500 font-medium max-w-md mx-auto">
+        <p className="text-lg text-white font-bold max-w-md mx-auto drop-shadow-md">
           Test your luck to win exclusive diamond packs. Spin the wheel to claim your reward!
         </p>
       </div>
