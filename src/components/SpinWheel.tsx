@@ -160,6 +160,19 @@ export default function SpinWheel() {
         background: 'radial-gradient(circle at 50% 50%, #ffea00 0%, #ff8c00 55%, #e65100 100%)'
       }}
     >
+      {/* Top Left Corner Decorations */}
+      <div className="absolute top-0 left-0 w-[300px] h-[300px] md:w-[500px] md:h-[500px] pointer-events-none z-0">
+        <div className="absolute top-0 left-0 w-full h-full bg-blue-700" style={{ clipPath: 'polygon(0 0, 100% 0, 0 100%)' }} />
+        <div className="absolute top-0 left-0 w-full h-full bg-emerald-500" style={{ clipPath: 'polygon(0 0, 95% 0, 0 85%)' }} />
+        <div className="absolute top-0 left-0 w-full h-full bg-lime-400" style={{ clipPath: 'polygon(0 0, 80% 0, 0 60%)' }} />
+      </div>
+
+      {/* Bottom Right Corner Decorations */}
+      <div className="absolute bottom-0 right-0 w-[300px] h-[300px] md:w-[500px] md:h-[500px] pointer-events-none z-0">
+        <div className="absolute bottom-0 right-0 w-full h-full bg-blue-700" style={{ clipPath: 'polygon(100% 100%, 0 100%, 100% 0)' }} />
+        <div className="absolute bottom-0 right-0 w-full h-full bg-emerald-500" style={{ clipPath: 'polygon(100% 100%, 5% 100%, 100% 15%)' }} />
+        <div className="absolute bottom-0 right-0 w-full h-full bg-lime-400" style={{ clipPath: 'polygon(100% 100%, 20% 100%, 100% 40%)' }} />
+      </div>
 
       {/* Decorative Header */}
       <div className="text-center mb-12 space-y-4 z-10">
